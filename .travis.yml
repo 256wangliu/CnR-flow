@@ -30,8 +30,10 @@ script:
 - cd ../test_pipe/
 - cat test_notes.txt
 - bash setup_reference.sh
-- nextflow run ./dl_prep_data.nf
+- NXF_VER="20.08.0-edge" nextflow run ./dl_prep_data.nf
 - cp nextflow.config.step1 nextflow.config
 - nextflow ../CnR-flow.nf --mode prep_fasta
 - cp nextflow.config.step2 nextflow.config
+- nextflow ../CnR-flow.nf --mode run
+- cp nextflow.config.step3 nextflow.config
 - nextflow ../CnR-flow.nf --mode run
