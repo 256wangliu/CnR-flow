@@ -29,7 +29,7 @@ install:
 - conda info -a
 script:
 - set -e
-- cd ./programs ; export PATH=$PATH:$PWD ; cd ..
+- ls *
 - export NXF_ANSI_LOG=false
 - mkdir ./test_init
 - cd    ./test_init
