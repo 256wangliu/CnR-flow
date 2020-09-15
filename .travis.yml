@@ -23,7 +23,15 @@ install:
 - conda update -q conda
 - conda info -a
 script:
-- mkdir ./test_dir
-- cd    ./test_dir
+- mkdir ./test_init
+- cd    ./test_init
 - nextflow run ../CnR-flow.nf --mode initiate
 - nextflow run ../CnR-flow.nf --mode validate_all
+- cd ../test_pipe/
+- cat test_notes.txt
+- bash setup_reference.sh
+- nextflow run ./dl_prep_data.nf
+- cp nextflow.config.step1 nextflow.config
+- nextflow ../CnR-flow.nf --mode prep_fasta
+- cp nextflow.config.step2 nextflow.config
+- nextflow ../CnR-flow.nf --mode run

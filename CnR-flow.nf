@@ -993,10 +993,10 @@ if( params.mode == 'run' ) {
             out_log_name = "${run_id}.nf.log.txt"
             merge_fastqs_dir = "${params.merge_fastqs_dir}"
             R1_files = fastq.findAll {fn ->
-                "${fn}".contains("_R1_") || "${fn}".contains("_1.f")
+                "${fn}".contains("_R1_") || "${fn}".contains("_1.f") || "${fn}".contains("_1_")
             }
             R2_files = fastq.findAll {fn -> 
-                "${fn}".contains("_R2_") || "${fn}".contains("_2.f")
+                "${fn}".contains("_R2_") || "${fn}".contains("_2.f") || "${fn}".contains("_2_")
             }
             R1_out_file = "${params.merge_fastqs_dir}/${name}_R1_001.fastq.gz"
             R2_out_file = "${params.merge_fastqs_dir}/${name}_R2_001.fastq.gz" 
