@@ -18,12 +18,12 @@
 gunzip test_reference.tar.gz
 tar -xvf test_reference.tar
 cd test_reference
-curl -# --retry 5 -o grch38_1kgmaj.fa.gz   ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/grch38_1kgmaj.fa.gz
-gunzip grch38_1kgmaj.fa.gz
+curl -# -sS --retry 15 -o grch38_1kgmaj.fa.gz   ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/grch38_1kgmaj.fa.gz
+gunzip -v grch38_1kgmaj.fa.gz
 
 mkdir grch38_1kgmaj_bt2_db; cd grch38_1kgmaj_bt2_db
-curl -# --retry 5 -o grch38_1kgmaj_bt2.zip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/grch38_1kgmaj_bt2.zip
-unzip grch38_1kgmaj_bt2.zip
+curl -# -sS --retry 15 -o grch38_1kgmaj_bt2.zip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/grch38_1kgmaj_bt2.zip
+unzip -v grch38_1kgmaj_bt2.zip
 cd ../../
 
 
