@@ -30,6 +30,7 @@ process Subsample_Fastq {
     conda 'bioconda::seqkit=0.13.2'
     tag   { sra }
     cache false
+    echo  true
 
     input:
     tuple val(sra), path(fastqs)
