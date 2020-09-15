@@ -29,11 +29,10 @@ install:
 - conda info -a
 script:
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then set -e ; fi
-- export NXF_ANSI_LOG=false
 - mkdir ./test_init
 - cd    ./test_init
 - nextflow run ../CnR-flow.nf --mode initiate
-- nextflow run ../CnR-flow.nf --mode validate_all
+- NXF_ANSI_LOG=false nextflow run ../CnR-flow.nf --mode validate_all
 - cd ../test_pipe/
 - cat test_notes.txt
 - bash setup_reference.sh
