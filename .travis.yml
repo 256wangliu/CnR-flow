@@ -23,6 +23,7 @@ install:
 - conda update -q conda
 - conda info -a
 script:
+- set -e
 - mkdir ./test_init
 - cd    ./test_init
 - nextflow run ../CnR-flow.nf --mode initiate
