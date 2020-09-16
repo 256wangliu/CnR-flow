@@ -21,17 +21,17 @@ cd raw_data
 
 echo "Downloading SRR6128981"
 #curl -# --retry-max-time 150 --retry 15 -o SRR6128981_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/001/SRR6128981/SRR6128981_1.fastq.gz
-wget --no-verbose --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/001/SRR6128981/SRR6128981_1.fastq.gz
+wget --progress=dot:mega --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/001/SRR6128981/SRR6128981_1.fastq.gz
 
 #curl -# --retry-max-time 150 --retry 15 -o SRR6128981_2.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/001/SRR6128981/SRR6128981_2.fastq.gz
-wget --no-verbose --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/001/SRR6128981/SRR6128981_2.fastq.gz
+wget --progress=dot:mega --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/001/SRR6128981/SRR6128981_2.fastq.gz
 
 echo "Downloading SRR6128978"
 #curl -# --retry-max-time 150 --retry 15 -o SRR6128978_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/008/SRR6128978/SRR6128978_1.fastq.gz
-wget --no-verbose --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/008/SRR6128978/SRR6128978_1.fastq.gz
+wget --progress=dot:mega --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/008/SRR6128978/SRR6128978_1.fastq.gz
 
 #curl -# --retry-max-time 150 --retry 15 -o SRR6128978_2.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/008/SRR6128978/SRR6128978_2.fastq.gz
-wget --no-verbose --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/008/SRR6128978/SRR6128978_2.fastq.gz
+wget --progress=dot:mega --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR612/008/SRR6128978/SRR6128978_2.fastq.gz
 
 echo "Done Donwnloading SRA Data."
 cd ..

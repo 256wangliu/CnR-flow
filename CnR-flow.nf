@@ -914,12 +914,13 @@ if( params.mode == 'run' ) {
                 stageInMode 'copy'
         
                 input:
-                tuple val(name), val(cond), val(group), path(test_fastq) from seq_len_fastqs.first()
+                tuple val(name), val(cond), val(group), path(fastq) from seq_len_fastqs.first()
                 
                 output:
                 env SIZE into input_seq_len
         
                 script:
+                test_fastq = fastq[0]
                 if( "${test_fastq}".endsWith('.gz') ) {
                     first_command = "head -c 10000 ${test_fastq} | zcat 2>/dev/null"
                 } else {
