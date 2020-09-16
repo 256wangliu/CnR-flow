@@ -27,10 +27,12 @@ workflow {
 }
 
 process Subsample_Fastq {
-    conda 'bioconda::seqkit=0.13.2'
-    tag   { sra }
-    cache false
-    echo  true
+    conda         'bioconda::seqkit=0.13.2'
+    tag           { sra }
+    cache         false
+    echo          true
+    errorStrategy { sleep(Math.pow(2, task.attempt) * 200 as long); return 'retry' }
+    maxRetries    10
 
     input:
     tuple val(sra), path(fastqs)
