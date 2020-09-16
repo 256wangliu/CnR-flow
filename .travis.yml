@@ -2,17 +2,11 @@ language: bash
 os:
 - linux
 - osx
-jobs:
-  allow_failures:
-  - os: osx
 jdk:
 - openjdk8
 branches:
   only:
   - master
-env:
-  global:
-    secure: QDG379r8yGNLTEdXIywpvfzYrWhwQiYFPf4oHB0jW7a6KtIXNWgB0M/Mxlyjc5oCtNosUr9KiAWake7TzzvANN68O930ip6u0tbiJ5saKXmGE/6GyH6iTAu3MQGZ2w77QBsOyHoF/k0mE9/sswaIPxOuMM+g9ZBjgQQTg2YjvLffl7S6hKn2PA+BcyYfgZBz8SURU3jRIly7I5q7WDDA5pnpY5LTgd6TCkm4ERet/UlAPwgHLhJnHJhViNTfDqtBQR6hk0D1aS0NGAN92ssHkToDiUSRgSkLzKjf8TF0zIicLkuLzCgBNkOBFXStQ/77xsKCqjxDqBp9xWAM5QXGCM7kaoblxVAxPMKudEJr8uPxJUqF+RMEN92eVO44/wEp5b68W3AG+4mkQqINFQhsxV2TghkHsP90uIPabL95VWhGsy1zIUvo7t4sTxF7I+aZKbtWjOlxfBmmcKcnnhfIthet8C5xhMkD080iAW3K3mqD8g/snr1JvNAWtXks9Xx9GaHBQot7MpxFkLDMJ4xJt6fPxfbhfudFG2XcS2hd0MfBVYiIiMwsTqHylVO6OBYSAJETL5aQJ2XsjTM8MAtPVQ3Wx8M5uGAKIUbx11l42jpdb43efC8kfgy0yS/v2bPFn47nPUR9R1X5C/g04G/qm2LIosyD1hvmlRJm7JoC3W4=
 install:
 - mkdir ./programs ; cd ./programs ; export PATH=$PATH:$PWD
 - curl -fsSL https://get.nextflow.io | bash
@@ -27,21 +21,41 @@ install:
 - conda config --set always_yes yes --set changeps1 no
 - conda update -q conda
 - conda info -a
+
 script:
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then set -e ; fi
 - export NXF_ANSI_LOG=false
 - mkdir ./test_init
 - cd    ./test_init
 - nextflow run ../CnR-flow.nf --mode initiate
-- nextflow run ../CnR-flow.nf --mode validate_all
-- cd ../test_pipe
-- cat test_notes.txt
-- bash setup_reference.sh
-- bash dl_data.sh
-- nextflow run ./subsample_data.nf
-- cp nextflow.config.step1 nextflow.config
-- nextflow ../CnR-flow.nf --verbose --mode prep_fasta
-- cp nextflow.config.step2 nextflow.config
-- travis_wait nextflow ../CnR-flow.nf --verbose --mode run
-- cp nextflow.config.step3 nextflow.config
-- travis_wait nextflow ../CnR-flow.nf --mode run
+- cd ..
+
+jobs:
+  allow_failures:
+  - os: osx
+  include:
+    - stage: Validate
+      script:
+        - cd ./test_init
+        - nextflow run ../CnR-flow.nf --mode validate_all
+    - stage: setup_pipe_test
+      script:
+        - ls
+        - cd test_pipe
+        - cat test_notes.txt
+        - bash setup_reference.sh
+        - bash dl_data.sh
+        - nextflow run ./subsample_data.nf
+        - cp nextflow.config.step1 nextflow.config
+        - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
+    - stage: run_pipe_test
+      name: Test_Pipe_Treat
+      script:
+        - ls
+        - cp nextflow.config.step2 nextflow.config
+        - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
+    - script:
+      name: Test_Pipe_Treat_Control
+        - ls
+        - cp nextflow.config.step3 nextflow.config
+        - travis_wait nextflow ../CnR-flow.nf --mode run
