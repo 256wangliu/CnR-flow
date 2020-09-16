@@ -16,6 +16,11 @@
 #You should have received a copy of the GNU General Public License
 #along with CnR-flow.  If not, see <https://www.gnu.org/licenses/>.
 
+if [ -d subsampled_data ] ; then
+  echo "Input Data Exists."
+  exit 0
+fi
+
 mkdir raw_data
 cd raw_data
 
@@ -35,4 +40,10 @@ wget --progress=dot:mega --waitretry=30 --retry-connrefused ftp://ftp.sra.ebi.ac
 
 echo "Done Donwnloading SRA Data."
 cd ..
+
+echo "Subsampling Data"
+
+./subsample_data.nf
+
+echo "Done Subsampling Data"
 

@@ -15,6 +15,10 @@
 #along with CnR-flow.  If not, see <https://www.gnu.org/licenses/>.
 
 # Source: http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.chromFa.tar.gz
+if [ -d test_reference ] ; then
+  echo "Reference Data Exists."
+  exit 0
+fi
 mkdir test_reference
 cd test_reference
 

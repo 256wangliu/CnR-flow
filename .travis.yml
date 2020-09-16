@@ -51,38 +51,41 @@ jobs:
     - script:
         - cd test_pipe
         - cat test_notes.txt
-        - bash setup_reference.sh
-        - bash dl_data.sh
-        - nextflow run ./subsample_data.nf
+        - ./setup_reference.sh
+        - ./dl_prep_data.sh
         - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
       os: osx
       name: Setup_Pipe_Test
     - stage: Run_Pipe_Test
       name: Treat
+      jdk: openjdk8
       script:
         - cd test_pipe
         - ls
         - cat test_notes.txt
-        - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
+        - nextflow ../CnR-flow.nf --verbose --mode run
     - script:
         - cd test_pipe
         - ls
         - cat test_notes.txt
-        - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
+        - nextflow ../CnR-flow.nf --verbose --mode run
       os: osx
       name: Treat
+      jdk: openjdk8
     - script:
         - cd test_pipe
         - ls
         - cat test_notes.txt
         - cp nextflow.config.step2 nextflow.config
-        - travis_wait nextflow ../CnR-flow.nf --mode run
+        - nextflow ../CnR-flow.nf --verbose --mode run
       name: Treat_Ctrl
+      jdk: openjdk8
     - script:
         - cd test_pipe
         - ls
         - cat test_notes.txt
         - cp nextflow.config.step2 nextflow.config
-        - travis_wait nextflow ../CnR-flow.nf --mode run
+        - nextflow ../CnR-flow.nf --verbose --mode run
       name: Treat_Ctrl
+      jdk: openjdk8
       os: osx
