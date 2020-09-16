@@ -21,8 +21,6 @@ install:
 - conda config --set always_yes yes --set changeps1 no
 - conda update -q conda
 - conda info -a
-
-script:
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then set -e ; fi
 - export NXF_ANSI_LOG=false
 - mkdir ./test_init
@@ -55,7 +53,7 @@ jobs:
         - cp nextflow.config.step2 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
     - script:
-      name: Test_Pipe_Treat_Control
         - ls
         - cp nextflow.config.step3 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --mode run
+      name: Test_Pipe_Treat_Ctrl
