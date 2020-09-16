@@ -28,6 +28,12 @@ install:
 - nextflow run ../CnR-flow.nf --mode initiate
 - cd ..
 
+cache:
+  directories:
+  - $HOME/test_pipe/raw_data
+  - $HOME/test_pipe/subsampled_data
+  - $HOME/test_pipe/test_reference
+
 jobs:
   allow_failures:
   - os: osx
@@ -36,7 +42,7 @@ jobs:
       script:
         - cd ./test_init
         - nextflow run ../CnR-flow.nf --mode validate_all
-    - stage: setup_pipe_test
+    - stage: Setup_Pipe_Test
       script:
         - ls
         - cd test_pipe
@@ -46,14 +52,30 @@ jobs:
         - nextflow run ./subsample_data.nf
         - cp nextflow.config.step1 nextflow.config
         - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
-    - stage: run_pipe_test
-      name: Test_Pipe_Treat
+      os: osx
+    - stage: Run_Pipe_Test
+      name: Treat
       script:
+        - cd test_pipe
         - ls
         - cp nextflow.config.step2 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
     - script:
+        - cd test_pipe
+        - ls
+        - cp nextflow.config.step2 nextflow.config
+        - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
+      os: osx
+    - script:
+        - cd test_pipe
         - ls
         - cp nextflow.config.step3 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --mode run
       name: Test_Pipe_Treat_Ctrl
+    - script:
+        - cd test_pipe
+        - ls
+        - cp nextflow.config.step3 nextflow.config
+        - travis_wait nextflow ../CnR-flow.nf --mode run
+      name: Test_Pipe_Treat_Ctrl
+      os: osx
