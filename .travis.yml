@@ -30,9 +30,9 @@ install:
 
 cache:
   directories:
-  - $HOME/test_pipe/raw_data
-  - $HOME/test_pipe/subsampled_data
-  - $HOME/test_pipe/test_reference
+  - test_pipe/raw_data
+  - test_pipe/subsampled_data
+  - test_pipe/test_reference
 
 jobs:
   allow_failures:
@@ -42,9 +42,12 @@ jobs:
       script:
         - cd ./test_init
         - nextflow run ../CnR-flow.nf --mode validate_all
+    - script:
+        - cd ./test_init
+        - nextflow run ../CnR-flow.nf --mode validate_all
+      os: osx
     - stage: Setup_Pipe_Test
       script:
-        - ls
         - cd test_pipe
         - cat test_notes.txt
         - bash setup_reference.sh
@@ -66,6 +69,7 @@ jobs:
         - cp nextflow.config.step2 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
       os: osx
+      name: Treat
     - script:
         - cd test_pipe
         - ls
