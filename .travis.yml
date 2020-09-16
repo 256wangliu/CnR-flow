@@ -38,7 +38,8 @@ jobs:
   allow_failures:
   - os: osx
   include:
-    - stage: Validate
+    - stage: Validate_and_Setup
+      name: Validate
       script:
         - cd ./test_init
         - nextflow run ../CnR-flow.nf --mode validate_all
@@ -46,8 +47,7 @@ jobs:
         - cd ./test_init
         - nextflow run ../CnR-flow.nf --mode validate_all
       os: osx
-    - stage: Setup_Pipe_Test
-      script:
+    - script:
         - cd test_pipe
         - cat test_notes.txt
         - bash setup_reference.sh
@@ -56,6 +56,7 @@ jobs:
         - cp nextflow.config.step1 nextflow.config
         - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
       os: osx
+      name: Setup_Pipe_Test
     - stage: Run_Pipe_Test
       name: Treat
       script:
