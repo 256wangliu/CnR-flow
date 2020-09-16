@@ -42,6 +42,6 @@ script:
 - cp nextflow.config.step1 nextflow.config
 - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
 - cp nextflow.config.step2 nextflow.config
-- nextflow ../CnR-flow.nf --verbose --mode run
+- travis_wait nextflow ../CnR-flow.nf --verbose --mode run
 - cp nextflow.config.step3 nextflow.config
-- nextflow ../CnR-flow.nf --mode run
+- travis_wait nextflow ../CnR-flow.nf --mode run
