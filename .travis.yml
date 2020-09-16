@@ -12,9 +12,9 @@ install:
 - curl -fsSL https://get.nextflow.io | bash
 - cd ..
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-  -O miniconda.sh; fi
+  -O miniconda.sh; MYENV=linux; fi
 - if [ "$TRAVIS_OS_NAME" = "osx" ];   then curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
-  -o miniconda.sh; fi
+  -o miniconda.sh; MYENV=OSX; fi
 - bash miniconda.sh -b -p $HOME/miniconda
 - source "$HOME/miniconda/etc/profile.d/conda.sh"
 - hash -r
@@ -28,6 +28,11 @@ install:
 - nextflow run ../CnR-flow.nf --mode initiate
 - cd ..
 
+
+script:
+  - cd ./test_init
+  - nextflow run ../CnR-flow.nf --mode validate_all
+
 cache:
   directories:
   - test_pipe/subsampled_data
@@ -38,17 +43,8 @@ jobs:
   allow_failures:
   - os: osx
   include:
-    - stage: Validate_and_Setup
-      name: Validate
+    - stage: Setup_Pipe_Test
       script:
-        - cd ./test_init
-        - nextflow run ../CnR-flow.nf --mode validate_all
-    - script:
-        - cd ./test_init
-        - nextflow run ../CnR-flow.nf --mode validate_all
-      os: osx
-      name: Validate
-    - script:
         - cd test_pipe
         - cat test_notes.txt
         - ./setup_reference.sh
