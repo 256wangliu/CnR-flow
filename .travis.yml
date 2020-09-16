@@ -31,7 +31,6 @@ install:
 - conda info -a
 
 script:
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then set -e ; fi
 - export NXF_ANSI_LOG=false
 - mkdir ./test_init
 - cd    ./test_init
