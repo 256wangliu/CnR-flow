@@ -47,13 +47,13 @@ jobs:
         - cd ./test_init
         - nextflow run ../CnR-flow.nf --mode validate_all
       os: osx
+      name: Validate
     - script:
         - cd test_pipe
         - cat test_notes.txt
         - bash setup_reference.sh
         - bash dl_data.sh
         - nextflow run ./subsample_data.nf
-        - cp nextflow.config.step1 nextflow.config
         - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
       os: osx
       name: Setup_Pipe_Test
@@ -62,25 +62,27 @@ jobs:
       script:
         - cd test_pipe
         - ls
-        - cp nextflow.config.step2 nextflow.config
+        - cat test_notes.txt
         - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
     - script:
         - cd test_pipe
         - ls
-        - cp nextflow.config.step2 nextflow.config
+        - cat test_notes.txt
         - travis_wait nextflow ../CnR-flow.nf --verbose --mode run
       os: osx
       name: Treat
     - script:
         - cd test_pipe
         - ls
-        - cp nextflow.config.step3 nextflow.config
+        - cat test_notes.txt
+        - cp nextflow.config.step2 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --mode run
       name: Treat_Ctrl
     - script:
         - cd test_pipe
         - ls
-        - cp nextflow.config.step3 nextflow.config
+        - cat test_notes.txt
+        - cp nextflow.config.step2 nextflow.config
         - travis_wait nextflow ../CnR-flow.nf --mode run
       name: Treat_Ctrl
       os: osx

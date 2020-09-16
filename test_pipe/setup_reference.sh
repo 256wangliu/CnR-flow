@@ -14,20 +14,15 @@
 #You should have received a copy of the GNU General Public License
 #along with CnR-flow.  If not, see <https://www.gnu.org/licenses/>.
 
-# Source: https://github.com/BenLangmead/bowtie-majref
-gunzip -v test_reference.tar.gz
-tar -xvf test_reference.tar
+# Source: http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.chromFa.tar.gz
+mkdir test_reference
 cd test_reference
-#echo "Downloading grch38_1kgmaj.fa.gz"
-#curl -# --retry-max-time 150 --retry 15 -o grch38_1kgmaj.fa.gz   ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/grch38_1kgmaj.fa.gz
-#wget --progress=dot:mega --waitretry=60 --retry-connrefused  ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/grch38_1kgmaj.fa.gz
 
-echo "Downloading grch38_1kgmaj_bt2.zip"
-mkdir grch38_1kgmaj_bt2_db; cd grch38_1kgmaj_bt2_db
-#curl -# --retry-max-time 150 --retry 15 -o grch38_1kgmaj_bt2.zip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/grch38_1kgmaj_bt2.zip
-wget --progress=dot:mega --waitretry=60 --retry-connrefused ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/grch38_1kgmaj_bt2.zip
-unzip grch38_1kgmaj_bt2.zip
-rm grch38_1kgmaj_bt2.zip
+wget --progress=dot:mega --waitretry=60 --retry-connrefused http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.chromFa.tar.gz
+tar -xvf hg38.chromFa.tar.gz ./chroms/chr22.fa
+rm  hg38.chromFa.tar.gz
+mv chroms/chr22.fa ./hg38_chr22.fa
+rmdir chroms
 echo "Done with reference downloads."
 cd ../../
 
