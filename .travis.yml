@@ -44,5 +44,5 @@ script:
 - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
 - nextflow ../CnR-flow.nf --verbose --mode run
 - cp nextflow.config.step2 nextflow.config
-- nextflow ../CnR-flow.nf --verbose --mode run
+- nextflow ../CnR-flow.nf -resume --verbose --mode run
 
