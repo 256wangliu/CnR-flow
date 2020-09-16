@@ -15,6 +15,12 @@ jobs:
   allow_failures:
   - os: osx
 
+cache:
+  directories:
+  - test_pipe/subsampled_data
+  - test_pipe/test_reference
+  timeout: 1800
+
 install:
 - mkdir ./programs ; cd ./programs ; export PATH=$PATH:$PWD
 - curl -fsSL https://get.nextflow.io | bash
