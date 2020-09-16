@@ -17,10 +17,15 @@
 // https://www.ncbi.nlm.nih.gov/Traces/study/?acc=GSE104550&o=acc_s%3Aa
 
 nextflow.enable.dsl=2
-sras = ['SRX3241465', 'SRX3241462']
+sras      = ['SRX3241465', 'SRX3241462']
+file_glob = "raw_data/*_{1,2}.fastq.gz"
+
 
 workflow {
-    Channel.fromSRA(sras)
+    //Channel.fromSRA(sras)
+    //      .view()
+    //      .set { in_fastqs }
+    Channel.fromFilePairs(file_glob)
           .view()
           .set { in_fastqs }
     Subsample_Fastq(in_fastqs)

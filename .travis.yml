@@ -29,14 +29,16 @@ install:
 - conda info -a
 script:
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then set -e ; fi
+- export NXF_ANSI_LOG=false
 - mkdir ./test_init
 - cd    ./test_init
 - nextflow run ../CnR-flow.nf --mode initiate
-- NXF_ANSI_LOG=false nextflow run ../CnR-flow.nf --mode validate_all
-- cd ../test_pipe/
+- nextflow run ../CnR-flow.nf --mode validate_all
+- cd ../test_pipe
 - cat test_notes.txt
 - bash setup_reference.sh
-- NXF_VER="20.08.0-edge" nextflow run ./dl_prep_data.nf
+- bash dl_data.sh
+- nextflow run ./subsample_data.nf
 - cp nextflow.config.step1 nextflow.config
 - nextflow ../CnR-flow.nf --mode prep_fasta
 - cp nextflow.config.step2 nextflow.config

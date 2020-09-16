@@ -7,7 +7,7 @@ conda_envs
 docs/_build
 docs/__pycache__
 test_pipe/.nextflow*
-test_pipe/data
+test_pipe/raw_data
 test_pipe/work
 test_pipe/subsampled_data
 test_pipe/test_reference/grch38_1kgmaj.fa.gz  
