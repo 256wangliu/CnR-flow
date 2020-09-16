@@ -18,6 +18,7 @@ jobs:
 cache:
   directories:
   - test_pipe/subsampled_data
+  - test_pipe/raw_data
   - test_pipe/test_reference
   timeout: 1800
 
