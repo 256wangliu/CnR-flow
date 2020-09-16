@@ -50,8 +50,13 @@ jobs:
         - ./setup_reference.sh
         - ./dl_prep_data.sh
         - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
+    - script:
+        - cd test_pipe
+        - cat test_notes.txt
+        - ./setup_reference.sh
+        - ./dl_prep_data.sh
+        - nextflow ../CnR-flow.nf --verbose --mode prep_fasta
       os: osx
-      name: Setup_Pipe_Test
     - stage: Run_Pipe_Test
       name: Treat
       jdk: openjdk8
