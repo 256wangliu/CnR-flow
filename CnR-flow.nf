@@ -1369,37 +1369,37 @@ if( params.mode == 'run' ) {
         echo -e "\\nFiltering Unmapped Fragments for name base: !{name} ... utilizing samtools view"
         set -v -H -o history
         !{params.samtools_call} view -bh -f 3 -F 4 -F 8 \\
-                                --threads !{add_threads} \\
-                                -o !{aln_pre}.mapped.bam \\
-                                !{aln}
+                      --threads !{add_threads} \\
+                      -o !{aln_pre}.mapped.bam \\
+                      !{aln}
         set +v +H +o history
 
         echo -e "\\nSorting by name in prepartion for duplicate marking for : !{name} ... utilizing samtools sort"
         set -v -H -o history
         !{params.samtools_call} sort -n \\
-                                     -o !{aln_pre}.mapped.nsort.bam \\
-                                     -@ !{task.cpus} \\
-                                     !{mem_flag} \\
-                                     !{aln_pre}.mapped.bam
+                      -o !{aln_pre}.mapped.nsort.bam \\
+                      -@ !{task.cpus} \\
+                      !{mem_flag} \\
+                      !{aln_pre}.mapped.bam
         set +v +H +o history
         rm -v !{aln_pre}.mapped.bam  # Clean Intermediate File
 
         echo -e "\\nAdding mate information for: !{name} ... utilizing samtools fixmate"
         set -v -H -o history
         !{params.samtools_call} fixmate -m  \\
-                                     --threads !{add_threads} \\
-                                     !{aln_pre}.mapped.nsort.bam \\
-                                     !{aln_pre}.mapped.nsort.fm.bam
+                          --threads !{add_threads} \\
+                          !{aln_pre}.mapped.nsort.bam \\
+                          !{aln_pre}.mapped.nsort.fm.bam
         set +v +H +o history
         rm -v !{aln_pre}.mapped.nsort.bam  # Clean Intermediate File
 
         echo -e "\\Coordinate-sorting mate-marked BAM for name base: !{name} ... utilizing samtools sort"
         set -v -H -o history
         !{params.samtools_call} sort \\
-                                -o !{aln_pre}.mapped.nsort.fm.csort.bam \\
-                                !{mem_flag} \\
-                                -@ !{task.cpus} \\
-                                !{aln_pre}.mapped.nsort.fm.bam
+                      -o !{aln_pre}.mapped.nsort.fm.csort.bam \\
+                      !{mem_flag} \\
+                      -@ !{task.cpus} \\
+                      !{aln_pre}.mapped.nsort.fm.bam
         set +v +H +o history
         rm -v !{aln_pre}.mapped.nsort.fm.bam  # Clean Intermediate File
 
@@ -1415,53 +1415,53 @@ if( params.mode == 'run' ) {
         echo "Summarizing/outputting all alignments in cram (compressed) format: !{name} ... utilizing samtools view"
         set -v -H -o history
         !{params.samtools_call} view -Ch  \\
-                                     -T !{ref_fasta} \\
-                                     --threads !{add_threads} \\
-                                     -o !{aln_sort} \\
-                                     !{aln_pre}.mapped.nsort.fm.csort.mkd.bam
+                      -T !{ref_fasta} \\
+                      --threads !{add_threads} \\
+                      -o !{aln_sort} \\
+                      !{aln_pre}.mapped.nsort.fm.csort.mkd.bam
         set +v +H +o history
         rm -v !{aln_pre}.mapped.nsort.fm.csort.mkd.bam  # Clean Intermediate File
         
         echo "\\nRemoving Duplicates for name base: !{name} ... utilizing samtools view"
         set -v -H -o history
         !{params.samtools_call} view -Ch -F 1024  \\
-                                     -T !{ref_fasta} \\
-                                     --threads !{add_threads} \\
-                                     -o !{aln_sort_dedup} \\
-                                     !{aln_sort}
+                      -T !{ref_fasta} \\
+                      --threads !{add_threads} \\
+                      -o !{aln_sort_dedup} \\
+                      !{aln_sort}
         set +v +H +o history
     
         echo -e "\\nFiltering Non-Deduplicated Alignments for name base: !{name} ... to < 120 utilizing samtools view"
         set -v -H -o history
         !{params.samtools_call} view -h \\
-                                     --threads !{add_threads} \\
-                                     -o !{aln_sort}.sam \\
-                                     !{aln_sort}
+                      --threads !{add_threads} \\
+                      -o !{aln_sort}.sam \\
+                      !{aln_sort}
         LC_ALL=C awk 'length($10) < 121 || $1 ~ /^@/' \\
                      !{aln_sort}.sam \\
                      > !{aln_sort}.120.sam
         !{params.samtools_call} view -Ch \\
-                                     -T !{ref_fasta} \\
-                                     --threads !{add_threads} \\
-                                     -o !{aln_sort_120} \\
-                                     !{aln_sort}.120.sam
+                      -T !{ref_fasta} \\
+                      --threads !{add_threads} \\
+                      -o !{aln_sort_120} \\
+                      !{aln_sort}.120.sam
         rm -v !{aln_sort}.sam !{aln_sort}.120.sam
         set +v +H +o history
 
         echo -e "\\nFiltering Deduplicated Alignments for name base: !{name} ... to < 120 utilizing samtools view"
         set -v -H -o history
         !{params.samtools_call} view -h \\
-                                     --threads !{add_threads} \\
-                                     -o !{aln_sort_dedup}.sam \\
-                                     !{aln_sort_dedup}
+                      --threads !{add_threads} \\
+                      -o !{aln_sort_dedup}.sam \\
+                      !{aln_sort_dedup}
         LC_ALL=C awk 'length($10) < 121 || $1 ~ /^@/' \\
                      !{aln_sort_dedup}.sam \\
                      > !{aln_sort_dedup}.120.sam
         !{params.samtools_call} view -Ch \\
-                                     -T !{ref_fasta} \\
-                                     --threads !{add_threads} \\
-                                     -o !{aln_sort_dedup_120} \\
-                                     !{aln_sort_dedup}.120.sam
+                      -T !{ref_fasta} \\
+                      --threads !{add_threads} \\
+                      -o !{aln_sort_dedup_120} \\
+                      !{aln_sort_dedup}.120.sam
         rm -v !{aln_sort_dedup}.sam !{aln_sort_dedup}.120.sam
         set +v +H +o history
         
@@ -1574,10 +1574,10 @@ if( params.mode == 'run' ) {
         echo "Sorting alignment file by name: !{aln_in} ... utilizing samtools sort"
         set -v -H -o history
         !{params.samtools_call} sort -n \\
-                                     -@ !{task.cpus} \\
-                                     !{mem_flag} \\
-                                     -o !{aln_by_name} \\
-                                     !{aln_in}
+                      -@ !{task.cpus} \\
+                      !{mem_flag} \\
+                      -o !{aln_by_name} \\
+                      !{aln_in}
         set -v -H -o history
         echo ""
         echo "Convert BAM into Paired-end Bedgraph."
@@ -1698,12 +1698,12 @@ if( params.mode == 'run' ) {
             # Align Reads to Spike-in Genome
             set -v -H -o history
             !{params.bowtie2_call} -p !{task.cpus} \\
-                                   !{aln_norm_flags} \\
-                                   -x !{spike_ref} \\
-                                   -1 !{fastq[0]} \\
-                                   -2 !{fastq[1]} \\
-                                   -S !{aln_spike_sam} \\
-                                   --al-conc-gz !{aln_spike_fq}
+                    !{aln_norm_flags} \\
+                    -x !{spike_ref} \\
+                    -1 !{fastq[0]} \\
+                    -2 !{fastq[1]} \\
+                    -S !{aln_spike_sam} \\
+                    --al-conc-gz !{aln_spike_fq}
                                           
             RAW_SPIKE_COUNT="$(!{params.samtools_call} view -Sc !{aln_spike_sam})"
             bc <<< "${RAW_SPIKE_COUNT}/2" > !{aln_spike_count}
@@ -1719,11 +1719,11 @@ if( params.mode == 'run' ) {
             # Realign Spike-in Alignments to Reference Genome to Check Cross-Mapping
             set -v -H -o history
             !{params.bowtie2_call} -p !{task.cpus} \\
-                                   !{aln_norm_flags} \\
-                                   -x !{ref_bt2db_path} \\
-                                   -1 !{aln_spike_fq_1} \\
-                                   -2 !{aln_spike_fq_2} \\
-                                   -S !{aln_cross_sam}
+                    !{aln_norm_flags} \\
+                    -x !{ref_bt2db_path} \\
+                    -1 !{aln_spike_fq_1} \\
+                    -2 !{aln_spike_fq_2} \\
+                    -S !{aln_cross_sam}
 
             RAW_CROSS_COUNT="$(!{params.samtools_call} view -Sc !{aln_cross_sam})"
             bc <<< "${RAW_CROSS_COUNT}/2" > !{aln_cross_count}
