@@ -29,6 +29,7 @@ Changelog
         * Added additional template nextflow.config files for task
         * Added macOS support (for all dependencies) 
         * Added macOS automated testing (with Travis CI)
+        * Added full pipe execution testing to Travis CI
 
     v0.10:
         * Refinements
